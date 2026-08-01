@@ -1,0 +1,7 @@
+TEAM_ID=
+
+PRODUCT_NAME=MarketPulse
+PRODUCT_BUNDLE_IDENTIFIER=aveek.portfolio.mobile.marketpulse.MarketPulse$(TEAM_ID)
+
+CURRENT_PROJECT_VERSION=1
+MARKETING_VERSION=1.0
