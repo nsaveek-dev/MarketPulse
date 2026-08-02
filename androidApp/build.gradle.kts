@@ -15,8 +15,15 @@ dependencies {
 
     implementation(libs.androidx.activity.compose)
 
-    implementation(libs.compose.uiToolingPreview)
-    debugImplementation(libs.compose.uiTooling)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    // androidApp/build.gradle.kts dependencies block
+    implementation(platform("androidx.compose:compose-bom:2024.10.00"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    implementation("androidx.compose.material3:material3")
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
 }
 
 android {

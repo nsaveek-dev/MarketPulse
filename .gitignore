@@ -9,3 +9,5 @@ build/
 .cxx
 *.hprof
 .kotlin/
+**/xcuserdata/
+*.xcuserstate

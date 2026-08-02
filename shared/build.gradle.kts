@@ -1,13 +1,15 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidMultiplatformLibrary)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
+    val xcf = XCFramework("shared")
+    jvmToolchain(11)
     listOf(
         iosArm64(),
         iosSimulatorArm64()
@@ -15,44 +17,45 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "Shared"
             isStatic = true
+            xcf.add(this)
         }
     }
-    
-    android {
-       namespace = "aveek.portfolio.mobile.marketpulse.shared"
-       compileSdk = libs.versions.android.compileSdk.get().toInt()
-       minSdk = libs.versions.android.minSdk.get().toInt()
-    
-       compilerOptions {
-           jvmTarget = JvmTarget.JVM_11
-       }
-       androidResources {
-           enable = true
-       }
-       withHostTest {
-           isIncludeAndroidResources = true
-       }
-       withDeviceTestBuilder {
-           sourceSetTreeName = "test"
-       }.configure {
-           instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-       }
+
+    androidLibrary {
+        namespace = "aveek.portfolio.mobile.marketpulse.shared"
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
+
+        androidResources {
+            enable = true
+        }
+        withHostTest {
+            isIncludeAndroidResources = true
+        }
+        withDeviceTestBuilder {
+            sourceSetTreeName = "test"
+        }.configure {
+            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        }
     }
-    
+
     sourceSets {
         androidMain.dependencies {
-            implementation(libs.compose.uiToolingPreview)
-            implementation(libs.compose.uiTooling)
+            implementation(libs.ktor.client.android)
+            implementation(libs.sqldelight.android.driver)
         }
         commonMain.dependencies {
-            implementation(libs.compose.runtime)
-            implementation(libs.compose.foundation)
-            implementation(libs.compose.material3)
-            implementation(libs.compose.ui)
-            implementation(libs.compose.components.resources)
-            implementation(libs.compose.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodelCompose)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.json)
+            implementation(libs.sqldelight.coroutines.ext)
+            implementation(libs.koin.core)
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.androidx.lifecycle.viewmodel)   // plain, not -compose
+        }
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+            implementation(libs.sqldelight.native.driver)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -60,6 +63,10 @@ kotlin {
     }
 }
 
-dependencies {
-    androidRuntimeClasspath(libs.compose.uiTooling)
+sqldelight {
+    databases {
+        create("AppDatabase") {
+            packageName.set("aveek.portfolio.mobile.marketpulse.shared.db")
+        }
+    }
 }
