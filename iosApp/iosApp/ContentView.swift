@@ -10,9 +10,19 @@ import Shared
 //}
 
 struct ContentView: View {
+    @State
+    private var isAnimating = false
     var body: some View {
-        Text("Hello, World!" + Greeting().greet())
-//        ComposeView()
-//            .ignoresSafeArea()
+        VStack {
+            Text("Hello, World!" + Greeting().greet())
+            Button("Click me!") {
+                HStack{
+                    Image(systemName: "star.fill")
+                                        .foregroundColor(.red)
+                                        .scaleEffect(isAnimating ? 2 : 1)
+                }
+                
+            }
+        }
     }
 }

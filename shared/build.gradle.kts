@@ -42,6 +42,7 @@ kotlin {
     sourceSets {
         androidMain.dependencies {
             implementation(libs.ktor.client.android)
+            implementation(libs.koin.androidx.compose)
             implementation(libs.sqldelight.android.driver)
         }
         commonMain.dependencies {
@@ -52,6 +53,7 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.androidx.lifecycle.viewmodel)   // plain, not -compose
+            implementation(libs.ktor.client.logging)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
