@@ -1,11 +1,15 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidMultiplatformLibrary)
-    alias(libs.plugins.sqldelight)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.room)
+    alias(libs.plugins.ksp)
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 kotlin {
@@ -22,7 +26,7 @@ kotlin {
         }
     }
 
-    androidLibrary {
+    android {
         namespace = "aveek.portfolio.mobile.marketpulse.shared"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
@@ -44,32 +48,30 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.ktor.client.android)
             implementation(libs.koin.androidx.compose)
-            implementation(libs.sqldelight.android.driver)
         }
         commonMain.dependencies {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.json)
-            implementation(libs.sqldelight.coroutines.ext)
             implementation(libs.koin.core)
             implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.androidx.lifecycle.viewmodel)   // plain, not -compose
+            implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.ktor.client.logging)
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.sqlite.bundled)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
-            implementation(libs.sqldelight.native.driver)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
     }
-}
+} // <-- kotlin block ends here
 
-sqldelight {
-    databases {
-        create("AppDatabase") {
-            packageName.set("aveek.portfolio.mobile.marketpulse.shared.db")
-        }
-    }
+// KSP compiler configs — plain Gradle DependencyHandler, must sit OUTSIDE kotlin{}
+dependencies {
+    add("kspAndroid", libs.androidx.room.compiler)
+    add("kspIosArm64", libs.androidx.room.compiler)
+    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
 }
