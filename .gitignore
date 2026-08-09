@@ -11,3 +11,4 @@ build/
 .kotlin/
 **/xcuserdata/
 *.xcuserstate
+/shared/schemas/
