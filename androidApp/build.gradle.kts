@@ -24,8 +24,8 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation(libs.koin.android)
     implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.kotlinx.coroutines.android)
 }
 
 android {
