@@ -3,6 +3,7 @@ package aveek.portfolio.mobile.marketpulse
 import android.app.Application
 import aveek.portfolio.mobile.marketpulse.di.androidModules
 import aveek.portfolio.mobile.marketpulse.di.initKoin
+import aveek.portfolio.mobile.marketpulse.domain.usecase.AppStartupUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -18,5 +19,8 @@ class MarketPulse : Application() {
             {androidContext(this@MarketPulse)},
             androidModules(this@MarketPulse)
         )
+        applicationScope.launch {
+            getKoin().get<AppStartupUseCase>().invoke()
+        }
     }
 }
