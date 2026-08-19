@@ -1,11 +1,17 @@
 package aveek.portfolio.mobile.marketpulse.di
 
-import aveek.portfolio.mobile.marketpulse.api.createHttpClient
+import aveek.portfolio.mobile.marketpulse.domain.usecase.AddToWatchListUseCase
+import aveek.portfolio.mobile.marketpulse.domain.usecase.AppStartupUseCase
+import aveek.portfolio.mobile.marketpulse.domain.usecase.GetWatchListUseCase
+import aveek.portfolio.mobile.marketpulse.domain.usecase.SearchStockUseCase
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-private val commonModule = module {
-    single { createHttpClient() }
+private val useCaseModule = module {
+    single { AppStartupUseCase(get()) }
+    single { AddToWatchListUseCase(get()) }
+    single { GetWatchListUseCase(get()) }
+    single { SearchStockUseCase(get()) }
 }
 
-val commonModules: List<Module> = listOf(commonModule)
+val commonModules: List<Module> = listOf( networkModule ,repositoryModule, useCaseModule)
