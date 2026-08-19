@@ -8,5 +8,4 @@ interface StockRepository {
     fun addToWatchList(id: String)
     fun searchStock(query: String) : List<Stock>
     fun fetchWatchList() : List<Stock>
-
 }

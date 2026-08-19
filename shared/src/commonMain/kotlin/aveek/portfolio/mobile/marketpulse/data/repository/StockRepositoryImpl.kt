@@ -1,10 +1,14 @@
 package aveek.portfolio.mobile.marketpulse.data.repository
 
 import aveek.portfolio.mobile.marketpulse.api.ApiService
+import aveek.portfolio.mobile.marketpulse.database.DatabaseService
 import aveek.portfolio.mobile.marketpulse.domain.model.Stock
 import aveek.portfolio.mobile.marketpulse.domain.repository.StockRepository
 
-class StockRepositoryImpl (private val apiService: ApiService): StockRepository{
+class StockRepositoryImpl(
+    private val apiService: ApiService,
+    private val databaseService: DatabaseService
+) : StockRepository {
 
     override fun fetchStocks(): List<Stock> {
         return apiService.fetchStocks()
@@ -23,6 +27,6 @@ class StockRepositoryImpl (private val apiService: ApiService): StockRepository{
     }
 
     override fun fetchWatchList(): List<Stock> {
-       return apiService.fetchWatchList()
+        return databaseService.fetchWatchList()
     }
 }
