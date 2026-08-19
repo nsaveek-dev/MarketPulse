@@ -1,4 +1,9 @@
 package aveek.portfolio.mobile.marketpulse.domain.usecase
 
-class AddToWatchListUseCase {
+import aveek.portfolio.mobile.marketpulse.domain.repository.StockRepository
+
+class AddToWatchListUseCase (private val repository: StockRepository) {
+    suspend operator fun invoke(stockId: String) {
+        repository.addToWatchList(stockId)
+    }
 }
