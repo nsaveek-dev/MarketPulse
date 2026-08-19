@@ -14,4 +14,4 @@ private val useCaseModule = module {
     single { SearchStockUseCase(get()) }
 }
 
-val commonModules: List<Module> = listOf( networkModule ,repositoryModule, useCaseModule)
+val commonModules: List<Module> = listOf( databaseModule ,networkModule ,repositoryModule, useCaseModule)

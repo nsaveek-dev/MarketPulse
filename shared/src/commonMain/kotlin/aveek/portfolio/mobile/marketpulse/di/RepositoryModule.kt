@@ -5,5 +5,5 @@ import aveek.portfolio.mobile.marketpulse.domain.repository.StockRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    single<StockRepository> { StockRepositoryImpl(get()) }
+    single<StockRepository> { StockRepositoryImpl(get(),get()) }
 }
