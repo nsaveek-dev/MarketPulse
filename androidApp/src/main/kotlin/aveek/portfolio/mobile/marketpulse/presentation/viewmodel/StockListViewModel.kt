@@ -17,4 +17,13 @@ class StockListViewModel(private val repository: StockRepository) : ViewModel() 
             StockListAction.RefreshStocks -> refreshStocks()
         }
     }
+
+    fun loadStocks(){
+        _uiState.value = _uiState.value.copy(isLoading = true)
+
+
+    }
+    fun refreshStocks(){
+        _uiState.value = _uiState.value.copy(isRefreshing = true)
+    }
 }
