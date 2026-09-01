@@ -2,6 +2,8 @@ package aveek.portfolio.mobile.marketpulse.di
 
 import aveek.portfolio.mobile.marketpulse.domain.usecase.AddToWatchListUseCase
 import aveek.portfolio.mobile.marketpulse.domain.usecase.AppStartupUseCase
+import aveek.portfolio.mobile.marketpulse.domain.usecase.FetchStockUseCase
+import aveek.portfolio.mobile.marketpulse.domain.usecase.FetchStocksUseCase
 import aveek.portfolio.mobile.marketpulse.domain.usecase.GetWatchListUseCase
 import aveek.portfolio.mobile.marketpulse.domain.usecase.SearchStockUseCase
 import org.koin.core.module.Module
@@ -12,6 +14,8 @@ private val useCaseModule = module {
     single { AddToWatchListUseCase(get()) }
     single { GetWatchListUseCase(get()) }
     single { SearchStockUseCase(get()) }
+    single { FetchStockUseCase(get()) }
+    single { FetchStocksUseCase(get()) }
 }
 
 val commonModules: List<Module> =

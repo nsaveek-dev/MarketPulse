@@ -6,7 +6,11 @@ import io.ktor.client.HttpClient
 class ApiService (private val client : HttpClient){
     fun fetchStocks(): List<Stock> {
         // Implement the API call to fetch stocks
-        return emptyList()
+        return listOf(
+            Stock("AAPL", 100.0),
+            Stock("GOOGL", 200.0),
+            Stock("MSFT", 150.0)
+        )
     }
 
     fun fetchStock(id: String): Stock {
