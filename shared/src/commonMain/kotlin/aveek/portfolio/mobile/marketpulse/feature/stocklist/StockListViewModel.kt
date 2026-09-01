@@ -15,6 +15,12 @@ class StockListViewModel(
     private val _uiState = MutableStateFlow(StockListUiState())
     val uiState = _uiState.asStateFlow()
 
+    init {
+        viewModelScope.launch {
+            loadStocks()
+        }
+    }
+
     fun event(action: StockListAction) {
         when (action) {
             StockListAction.LoadStocks -> viewModelScope.launch { loadStocks() }
