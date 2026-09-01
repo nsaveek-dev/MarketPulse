@@ -56,7 +56,7 @@ kotlin {
             implementation(libs.ktor.serialization.json)
             implementation(libs.koin.core)
             implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(libs.koin.viewmodel)
             implementation(libs.ktor.client.logging)
             implementation(libs.androidx.room.runtime)
             implementation(libs.sqlite.bundled)

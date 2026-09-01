@@ -1,4 +1,4 @@
-package aveek.portfolio.mobile.marketpulse.presentation.screens.stocklist
+package aveek.portfolio.mobile.marketpulse.feature.stocklist
 
 import aveek.portfolio.mobile.marketpulse.domain.model.Stock
 
