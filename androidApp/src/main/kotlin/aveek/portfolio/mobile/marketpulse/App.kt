@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import aveek.portfolio.mobile.marketpulse.feature.stocklist.StockListAction
 import aveek.portfolio.mobile.marketpulse.feature.stocklist.StockListViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -33,34 +34,39 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun MainScreen() {
     val viewModel: StockListViewModel = koinViewModel()
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     MaterialTheme {
-        if (uiState.isLoading) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text("Loading...")
-                Spacer(Modifier.height(16.dp))
-                CircularProgressIndicator()
+        when {
+            uiState.isRefreshing -> {
+
             }
-        }
-        if (!uiState.error.isNullOrBlank()){
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text("Error: ${uiState.error}")
+            uiState.isLoading -> {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text("Loading...")
+                    Spacer(Modifier.height(16.dp))
+                    CircularProgressIndicator()
+                }
             }
-        }
-        if (uiState.listOfStocks.isNotEmpty()) {
-            LazyColumn(modifier = Modifier.padding(4.dp)) {
-                items(uiState.listOfStocks.size) { index ->
-                    val stock = uiState.listOfStocks[index]
-                    Text(stock.name)
-                    Spacer(Modifier.height(4.dp))
+            uiState.error != null -> {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text("Error: ${uiState.error}")
+                }
+            }
+            else -> {
+                LazyColumn(modifier = Modifier.padding(4.dp)) {
+                    items(uiState.listOfStocks.size) { index ->
+                        val stock = uiState.listOfStocks[index]
+                        Text(stock.name)
+                        Spacer(Modifier.height(4.dp))
+                    }
                 }
             }
         }
