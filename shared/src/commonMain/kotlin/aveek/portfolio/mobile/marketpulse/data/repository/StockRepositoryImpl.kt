@@ -10,11 +10,11 @@ class StockRepositoryImpl(
     private val databaseService: DatabaseService
 ) : StockRepository {
 
-    override fun fetchStocks(): List<Stock> {
+    override suspend fun fetchStocks(): List<Stock> {
         return apiService.fetchStocks()
     }
 
-    override fun fetchStock(id: String): Stock {
+    override suspend fun fetchStock(id: String): Stock {
         return apiService.fetchStock(id)
     }
 
@@ -22,7 +22,7 @@ class StockRepositoryImpl(
         apiService.addToWatchList(id)
     }
 
-    override fun searchStock(query: String): List<Stock> {
+    override suspend fun searchStock(query: String): List<Stock> {
         return apiService.searchStock(query)
     }
 
