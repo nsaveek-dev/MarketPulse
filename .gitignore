@@ -12,3 +12,4 @@ build/
 **/xcuserdata/
 *.xcuserstate
 /shared/schemas/
+shared/src/commonMain/kotlin/aveek/portfolio/mobile/marketpulse/api/AlphaVantageConfig.kt

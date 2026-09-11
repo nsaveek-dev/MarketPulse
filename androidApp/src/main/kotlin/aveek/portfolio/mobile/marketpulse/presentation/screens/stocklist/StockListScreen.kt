@@ -3,6 +3,7 @@ package aveek.portfolio.mobile.marketpulse.presentation.screens.stocklist
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -10,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import aveek.portfolio.mobile.marketpulse.feature.stocklist.StockListViewModel
+import aveek.portfolio.mobile.marketpulse.presentation.screens.stocklist.components.StockListHeader
 import aveek.portfolio.mobile.marketpulse.presentation.screens.stocklist.components.StockRow
 import aveek.portfolio.mobile.marketpulse.presentation.screens.stocklist.components.changeColor
 import aveek.portfolio.mobile.marketpulse.presentation.util.formatChange
@@ -37,6 +38,7 @@ fun StockListScreen() {
     MaterialTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
+            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
             topBar = {
                 TopAppBar(title = { Text("MarketPulse") })
             }
@@ -68,17 +70,11 @@ fun StockListScreen() {
                     }
                     else -> {
                         Column(modifier = Modifier.fillMaxSize()) {
-                            StockRow(
-                                symbol = "Symbol",
-                                price = "Price",
-                                change = "Change",
-                                changePercent = "Change %",
-                                isHeader = true
-                            )
-                            HorizontalDivider(
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.24f)
-                            )
-                            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                            StockListHeader()
+                            LazyColumn(
+                                modifier = Modifier.fillMaxSize(),
+                                contentPadding = PaddingValues(vertical = 6.dp)
+                            ) {
                                 items(uiState.listOfStocks.size) { index ->
                                     val stock = uiState.listOfStocks[index]
                                     StockRow(
@@ -87,9 +83,6 @@ fun StockListScreen() {
                                         change = formatChange(stock.change),
                                         changePercent = formatChangePercent(stock.changePercent),
                                         changeColor = changeColor(stock.change)
-                                    )
-                                    HorizontalDivider(
-                                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
                                     )
                                 }
                             }
