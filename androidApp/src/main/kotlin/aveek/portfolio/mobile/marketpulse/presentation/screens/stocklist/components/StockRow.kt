@@ -150,8 +150,13 @@ private fun ChangePill(
         horizontalAlignment = Alignment.End,
         verticalArrangement = Arrangement.Center
     ) {
+        val trend = when {
+            changePercent.startsWith("+") -> "▲ "
+            changePercent.startsWith("-") -> "▼ "
+            else -> ""
+        }
         Text(
-            text = changePercent,
+            text = "$trend$changePercent",
             style = MaterialTheme.typography.labelLarge,
             fontWeight = FontWeight.Bold,
             color = changeColor,

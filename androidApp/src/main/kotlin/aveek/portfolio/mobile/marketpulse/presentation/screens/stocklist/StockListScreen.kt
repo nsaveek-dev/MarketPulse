@@ -38,6 +38,7 @@ fun StockListScreen() {
     MaterialTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
+            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
             topBar = {
                 TopAppBar(title = { Text("MarketPulse") })
             }
